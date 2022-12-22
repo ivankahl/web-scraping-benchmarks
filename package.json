@@ -1,0 +1,15 @@
+{
+  "name": "headless-browser-tests",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {},
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "chromedriver": "^108.0.0",
+    "playwright": "^1.29.1",
+    "puppeteer": "^19.4.1",
+    "selenium-webdriver": "^4.7.1"
+  }
+}
