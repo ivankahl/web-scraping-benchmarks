@@ -1,4 +1,4 @@
-# web-scraping-benchmarks
+# Web Scraping Library Benchmarks
 
 > Node.js that benchmarks scraping Reddit using Puppeteer, Playwright, Selenium, Nightmare and Cypress.
 
