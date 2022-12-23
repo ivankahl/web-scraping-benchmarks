@@ -4,9 +4,7 @@
 
 I wanted to compare the performance of different JavaScript browser automation libraries to determine which is the most efficient. I couldn't find any existing resources for the particular libraries I was looking at, so I decided to write a simple benchmark script to compare. 
 
-The benchmark compares how long each library takes to retrieve the [Programming Reddit](https://old.reddit.com/r/programming/) frontpage. I used the old version of Reddit so that I don't have too many variables to deal with in the tests. Once the page is retrieved, I use each library to scrape the titles of all the posts on the frontpage and store them in a JavaScript array.
-
-The above process is repeated `N` number of times and each iteration is timed.
+For each library, a test method is created. The test method will initialize the libary and then load the [Old Reddit Programming page](https://old.reddit.com/r/programming/). The method then uses the specific library to extract all the titles of the posts shown on the first page and store them in an array. In order to benchmark each of these methods, I used the [performance-now](https://www.npmjs.com/package/performance-now) NPM package to time each methods execution. I then executed each library method `N` number of times, timing each execution in milliseconds. At the end of the executions, I compiled the list of times and calculated the mean, min, max and range for each library.
 
 ## The Results
 
@@ -164,7 +162,7 @@ For this benchmark, I used a Digital Ocean Droplet. The virtual machine was conf
 
 Below is a line graph showing the execution times for each library over the 20 runs:
 
-![image](https://user-images.githubusercontent.com/5931577/209337903-9564fd90-4010-4c72-be9c-316a846cadb6.png)
+![image](https://user-images.githubusercontent.com/5931577/209339146-9ec2f2a8-39b7-4088-8593-01460716f369.png)
 
 If we calculate the mean execution time for each library, we can derive the following graph:
 
