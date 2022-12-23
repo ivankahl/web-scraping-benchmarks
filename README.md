@@ -1,14 +1,14 @@
 # Web Scraping Library Benchmarks
 
-> Node.js that benchmarks scraping Reddit using Puppeteer, Playwright, Selenium, Nightmare and Cypress.
+> Node.js that benchmarks scraping Reddit using Puppeteer, Playwright, Selenium, Nightmare, and Cypress.
 
-I wanted to compare the performance of different JavaScript browser automation libraries to determine which is the most efficient. I couldn't find any existing resources for the particular libraries I was looking at, so I decided to write a simple benchmark script to compare. 
+I wanted to compare the performance of different JavaScript browser automation libraries to determine the most efficient. Unfortunately, I couldn't find any existing resources for the particular libraries I was looking at, so I decided to write a simple benchmark script to compare. 
 
-For each library, a test method is created. The test method will initialize the libary and then load the [Old Reddit Programming page](https://old.reddit.com/r/programming/). The method then uses the specific library to extract all the titles of the posts shown on the first page and store them in an array. In order to benchmark each of these methods, I used the [performance-now](https://www.npmjs.com/package/performance-now) NPM package to time each methods execution. I then executed each library method `N` number of times, timing each execution in milliseconds. At the end of the executions, I compiled the list of times and calculated the mean, min, max and range for each library.
+I created a test method for each library. The test method will initialize the library and then load the [Old Reddit Programming page](https://old.reddit.com/r/programming/). The function then extracts all the titles of the posts shown on the first page and stores them in an array. To benchmark each of these methods, I used the [performance-now](https://www.npmjs.com/package/performance-now) NPM package to time the execution of each method. I then executed each library method `N` number of times, timing each execution in milliseconds. At the end of the executions, I compiled the list of times and calculated each library's mean, min, max, and range.
 
 ## The Results
 
-For this benchmark, I used a Digital Ocean Droplet. The virtual machine was configured with 8GB RAM and 4 Intel vCPUs in the San Francisco 3 region. The latest LTS version of Node, that is v18.12.1, was used to run the script. All tests were performed using Google Chrome 108.0.5359.71. I set `N` to 20 in the script so that each library was executed 20 times.
+For this benchmark, I used a Digital Ocean Droplet. I configured the virtual machine with 8GB RAM and 4 Intel vCPUs in the San Francisco 3 region. I used the latest LTS version of Node (v18.12.1) to run the script. Finally, I performed all tests using Google Chrome 108.0.5359.71. I set `N` to 20, so the script executed each library's test function 20 times.
 
 <details>
 <summary><b>Raw Results</b></summary>
@@ -168,5 +168,5 @@ If we calculate the mean execution time for each library, we can derive the foll
 
 ![image](https://user-images.githubusercontent.com/5931577/209337945-741fec0e-db07-4f88-acac-522d4b5b438f.png)
 
-Puppeteer came first in terms of performance with Playwright coming a close second. Then there's a noticable jump from second to third. Nightmare took roughly the same amount of time as Selenium. Lastly, Cypress had the worst performance of the five libraries. This is understandable though, as Cypress is more an end-to-end testing library than a web scraping library, meaning it has additional overhead that is executed every time.
+Puppeteer came first in terms of performance, with Playwright coming second. Then there's a noticeable jump from second to third. Nightmare took roughly the same amount of time as Selenium. Lastly, Cypress had the worst performance of the five libraries. This gap is understandable, though, as Cypress is more an end-to-end testing library than a web scraping library, meaning it has additional overhead that is executed every time.
 
