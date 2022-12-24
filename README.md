@@ -4,11 +4,47 @@
 
 I wanted to compare the performance of different JavaScript browser automation libraries to determine the most efficient. Unfortunately, I couldn't find any existing resources for the particular libraries I was looking at, so I decided to write a simple benchmark script to compare. 
 
-I created a test method for each library. The test method will initialize the library and then load the [Old Reddit Programming page](https://old.reddit.com/r/programming/). The function then extracts all the titles of the posts shown on the first page and stores them in an array. To benchmark each of these methods, I used the [performance-now](https://www.npmjs.com/package/performance-now) NPM package to time the execution of each method. I then executed each library method `N` number of times, timing each execution in milliseconds. At the end of the executions, I compiled the list of times and calculated each library's mean, min, max, and range.
+## How It Works
 
-## The Results
+The file structure is not too elaborate for this benchmark. I created test functions for each of the libraries inside the `index.js` file. These are called `puppeteerTest`, `playwrightTest`, `seleniumTest`, `nightmareTest` and `cypressTest`. In each function, I use the corresponding library to open a new browser instance and navigate to the [Old Reddit Programming Subreddit](https://old.reddit.com/r/programming/). After that, each function uses the appropriate library to extract an array of post titles present on the front page of the subreddit. Each function makes sure to the close the browser completely.
 
-For this benchmark, I used a Digital Ocean Droplet. I configured the virtual machine with 8GB RAM and 4 Intel vCPUs in the San Francisco 3 region. I used the latest LTS version of Node (v18.12.1) to run the script. Finally, I performed all tests using Google Chrome 108.0.5359.71. I set `N` to 20, so the script executed each library's test function 20 times.
+Each of these `xxxTest` methods are added to a dictionary. I then created a function that lets you specify how many Runs/Iterations you want to use to benchmark using a parameter called `n`. The function will then loop from `0` to `n - 1` and execute each of the test functions. I get the current timestamp before and after each test function's execution using the [performance-now](https://www.npmjs.com/package/performance-now) NPM package. This package lets me time the method execution accurately. Once all the iterations are complete, the function returns an object where the key is the name of each library and the value is an array of the times for each run/iteration.
+
+I then have another method which accepts this "stats" object and computes the mean, max, min and range for each library. This is then outputted to the console.
+
+## The Test
+
+I ran this script so that I could get an idea how the different libraries performed. I used Google Chrome on Ubuntu when executing the tests
+
+### The Environment
+
+#### Server
+
+The server was a Digital Ocean Droplet hosted in the San Francisco 3 region.
+
+- 8GB RAM
+- 4 Intel vCPUs
+
+#### Software
+
+- Ubuntu 22.10
+- Node 18.12.1 (latest LTS)
+- Google Chrome 108.0.5359.71
+
+#### Network
+
+I tried to reduce the risk of network speed affecting the results by running the tests from a data center. I ran Speedtest.net several times and these are the final average speeds and ping:
+
+- **Server:** Sonic.net, Inc. (San Jose, CA) [12.66 km]
+- **Ping:** 1.6334 ms
+- **Download:** 2 307.51 Mbit/s
+- **Upload:** 1 758.13 Mbit/s
+
+### Parameters
+
+I executed the `index.js` file as is, using `n = 20` as my parameter. This means that there were 20 iterations/runs.
+
+### Results
 
 <details>
 <summary><b>Raw Results</b></summary>
@@ -160,13 +196,21 @@ For this benchmark, I used a Digital Ocean Droplet. I configured the virtual mac
 
 </details>
 
-Below is a line graph showing the execution times for each library over the 20 runs:
+Below is a line graph showing the execution times for each library over the 20 runs. 
 
 ![image](https://user-images.githubusercontent.com/5931577/209339146-9ec2f2a8-39b7-4088-8593-01460716f369.png)
+
+You can see that Playwright and Puppeteer performed consistently fast. Selenium and Nightmare were a bit slower and also had a large range, meaning the times were less consistent. Finally, Cypress is found to be the slowest. This is understandable since Cypress is more than a web scraper, it's a full browser automation test library. Hence, Cypress has additional overhead and intialization that occurs. All of this overhead means that the library performed slower for web scraping.
 
 If we calculate the mean execution time for each library, we can derive the following graph:
 
 ![image](https://user-images.githubusercontent.com/5931577/209337945-741fec0e-db07-4f88-acac-522d4b5b438f.png)
 
-Puppeteer came first in terms of performance, with Playwright coming second. Then there's a noticeable jump from second to third. Nightmare took roughly the same amount of time as Selenium. Lastly, Cypress had the worst performance of the five libraries. This gap is understandable, though, as Cypress is more an end-to-end testing library than a web scraping library, meaning it has additional overhead that is executed every time.
+Puppeteer came first in terms of performance, with Playwright coming second. Then there's a noticeable jump from second to third. Nightmare took roughly the same amount of time as Selenium. Lastly, Cypress had the worst performance of the five libraries, presumable for the reasons stated above.
+
+## Conclusion
+
+It appears that the two most popular, modern web scraping frameworks, Puppeteer and Playwright, have the best performance for web scraping. However, Selenium, which has been around for many years, is not far behind and so it's still a viable option. Nightmare might not have the same traction as the first three libraries but it also remains a viable option. Cypress might work for web scraping, and it's simple API makes it an attractive option, however the performance might not be beneficial for your needs.
+
+Overall this was an interesting test and hopefully one that can help you as well.
 
