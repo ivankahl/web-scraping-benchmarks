@@ -133,7 +133,6 @@ function calculateStats(times) {
 }
 
 (async () => {
-  //await cypressTest();
-  const times = await executeNTimes(5);
+  const times = await executeNTimes(20);
   console.log(calculateStats(times));
 })();
