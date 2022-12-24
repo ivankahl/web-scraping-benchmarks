@@ -14,7 +14,7 @@ I then have another method which accepts this "stats" object and computes the me
 
 ## The Test
 
-I ran this script so that I could get an idea how the different libraries performed. I used Google Chrome on Ubuntu when executing the tests
+I ran this script so that I could get an idea how the different libraries performed. I used Google Chrome on Ubuntu when executing the tests.
 
 ### The Environment
 
@@ -30,6 +30,7 @@ The server was a Digital Ocean Droplet hosted in the San Francisco 3 region.
 - Ubuntu 22.10
 - Node 18.12.1 (latest LTS)
 - Google Chrome 108.0.5359.71
+- Electron 22.0 (for Nightmare)
 
 #### Network
 
